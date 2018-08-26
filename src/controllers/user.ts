@@ -6,9 +6,9 @@ import {
   httpDelete,
   requestParam
 } from "inversify-express-utils";
-import {inject} from "inversify";
-import {IUser, UserService} from "../services/user";
-import {Request} from "express";
+import { inject } from "inversify";
+import { IUser, UserService } from "../services/user";
+import { Request } from "express";
 import TYPES from "../constants/types";
 
 @controller("/api/v1/user")

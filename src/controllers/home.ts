@@ -1,4 +1,4 @@
-import {controller, httpGet} from "inversify-express-utils";
+import { controller, httpGet } from "inversify-express-utils";
 
 @controller("/api/v1/")
 export class HomeController {

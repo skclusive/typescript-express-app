@@ -1,6 +1,6 @@
 import { IBlock } from "./block";
 
 export interface IBlockService {
-  getBlocks(): Array<IBlock>;
-  getBlock(hash: string): IBlock;
+  getBlocks(): Promise<Array<IBlock>>;
+  getBlock(hash: string): Promise<IBlock>;
 }

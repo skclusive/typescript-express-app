@@ -4,16 +4,17 @@ import {
   httpPost,
   httpPut,
   httpDelete,
+  requestBody,
   requestParam
 } from "inversify-express-utils";
 import { inject } from "inversify";
-import { IUser, UserService } from "../services/user";
-import { Request } from "express";
-import TYPES from "../constants/types";
+import { IUser, IUserService, Services } from "../services";
 
 @controller("/api/v1/user")
 export class UserController {
-  constructor(@inject(TYPES.UserService) private userService: UserService) {}
+  constructor(
+    @inject(Services.User) private readonly userService: IUserService
+  ) {}
 
   @httpGet("/")
   public getUsers(): IUser[] {
@@ -26,17 +27,20 @@ export class UserController {
   }
 
   @httpPost("/")
-  public newUser(request: Request): IUser {
-    return this.userService.newUser(request.body);
+  public newUser(@requestBody() user: IUser): IUser {
+    return this.userService.newUser(user);
   }
 
   @httpPut("/:id")
-  public updateUser(@requestParam("id") id: string, request: Request): IUser {
-    return this.userService.updateUser(id, request.body);
+  public updateUser(
+    @requestParam("id") id: string,
+    @requestBody() user: IUser
+  ): IUser {
+    return this.userService.updateUser(id, user);
   }
 
   @httpDelete("/:id")
-  public deleteUser(request: Request): string {
-    return this.userService.deleteUser(request.params.id);
+  public deleteUser(@requestParam("id") id: string): string {
+    return this.userService.deleteUser(id);
   }
 }

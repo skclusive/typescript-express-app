@@ -1,21 +1,22 @@
 import { controller, httpGet, requestParam } from "inversify-express-utils";
 import { inject } from "inversify";
-import { IBlock, IBlockService } from "../services/block";
-import TYPES from "../constants/types";
+import { IBlock, IBlockService, Services } from "../services";
 
 @controller("/api/v1/block")
 export class BlockController {
   constructor(
-    @inject(TYPES.BlockService) private blockService: IBlockService
+    @inject(Services.Block) private readonly blockService: IBlockService
   ) {}
 
   @httpGet("/")
-  public getBlocks(): IBlock[] {
-    return this.blockService.getBlocks();
+  public async getBlocks(): Promise<IBlock[]> {
+    return await this.blockService.getBlocks();
   }
 
   @httpGet("/:id")
-  public getBlock(@requestParam("id") id: string): IBlock | undefined {
-    return this.blockService.getBlock(id);
+  public async getBlock(
+    @requestParam("id") id: string
+  ): Promise<IBlock | undefined> {
+    return await this.blockService.getBlock(id);
   }
 }
